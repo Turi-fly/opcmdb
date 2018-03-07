@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+
+{% block breadcrumb %}
+<li class="active">dashboard</li>
+{% endblock %}
+
+{% block body %}
+<ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" ><a href="/">数据总图</a></li>
+      <li role="presentation" ><a href="/">服务器数量</a></li>
+      <li role="presentation" ><a href="/index2">机器类型</a></li>
+      <li role="presentation" class="active"><a href="/index3">机器规格</a></li>
+      <li role="presentation" ><a href="/index4">机器机柜</a></li>
+</ul>
+</br>
+</br>
+</br>
+   <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="table"></div>
+    <div id="main" style="width: 1000px;height:580px;"></div>
+{% endblock %}
+
+{% block js %}
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '服务器类型(硬件服务器)'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {
+                data: {{ spec | safe }},
+                align: 'right',
+                right: 10
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [{
+                type: 'category',
+                data: ['云鸟']
+            }],
+            yAxis: [{
+                type: 'value',
+                name: '台',
+                axisLabel: {
+                    formatter: '{value}'
+                }
+            }],
+            series: [
+                {% for item in spec %}
+                    {
+                    name: '{{ item }}',
+                    type: 'bar',
+                    data: {{ [server_spec_yn[item]] }}
+                        },
+                {% endfor %}
+
+            ]
+        };
+        spec_dict = {{ spec_dict | safe }}
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        //点击弹出相应的信息
+        myChart.on('click', function(param){
+                param.spec_id = spec_dict[param.seriesName]
+                if (param.name=='云鸟')
+                    {
+                        param.name=13;
+                    }
+                console.log(param.name)
+                $.ajax({
+                    type: 'post',
+                    url: "/assets/data_view3/",
+                    data: {
+                        name: param.name,
+                        seriesName: param.seriesName,
+                        value: param.value,
+                        spec_id: param.spec_id
+                    },
+                    success: function(res){
+                        $('#main').hide()
+                        $('#table').html(res)
+                    }
+                });
+        });
+{% endblock %}

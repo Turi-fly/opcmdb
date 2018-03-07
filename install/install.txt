@@ -1,0 +1,50 @@
+
+1.安装专用沙盒的虚拟环境：这样子可以把环境隔离出来
+
+在环境python2.7.9环境下
+
+yum install python-virtualenv
+
+启动沙盒环境:
+	virtualenv venv
+
+2.mysql的安装
+
+yum install mysql-server
+
+3.编辑/conf/service.conf配置
+
+ [common]
+ mysql_host=127.0.0.1
+ mysql_port=3306
+ mysql_user=yunniao
+ mysql_passwd=yunniao.me
+ mysql_db=yn_cmdb
+ mysql_charset=utf8
+ passport_key=123456
+ 
+ [api]
+ port=1000
+ bind=127.0.0.1
+ 
+ [web]
+ port=1001
+ api_host=127.0.0.1:1000
+
+
+ 4.创建日志文件
+mkdir /var/log/api/
+mkdir /var/log/web/
+
+5.安装uwsgi
+
+pip install uwsgi
+
+
+用 http 的方式启动 uWSGI
+example：
+nohup uwsgi --http x.x.x.x:8080 --file path(当前文件的路径)  --callable app  --master --processes 24 --threads 12 --stats 127.0.0.1:9191 &
+
+环境下启动的命令
+nohup uwsgi --http :1000 -w runapi:app --logto /var/log/cmdb_api_access.log &
+nohup uwsgi --http :1000 -w runapi:app --logto /var/log/cmdb_api_access.log &

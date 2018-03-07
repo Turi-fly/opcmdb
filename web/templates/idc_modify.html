@@ -1,0 +1,47 @@
+<form class="form-horizontal" id="create-asset" action="/assets/update_idc_list/" method="post">
+    <input type="hidden" name="id" value="{{idc['id']}}" />
+    <div class="form-group">
+        <label class="col-md-3 control-label">机房:</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" name="name" value="{{idc['name']}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">物理设备:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="physical" value="{{idc['physical']}}"/>
+        </div>
+    </div>
+        <div class="form-group">
+        <label class="col-md-3 control-label">交换设备:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="switch" value="{{idc['switch']}}"/>
+        </div>
+    </div>
+        <div class="form-group">
+        <label class="col-md-3 control-label">vm:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="vm" value="{{idc['vm']}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">ip段:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="ip_seg" value="{{idc['ip_seg']}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">机房地址:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="address" value="{{idc['address']}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">电话:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" id="cpu" name="phone" value="{{idc['phone']}}" />
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+</script>

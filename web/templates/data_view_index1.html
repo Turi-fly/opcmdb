@@ -1,0 +1,80 @@
+<table id ="datatables"  class="table table-bordered table-striped table-hover" cellspacing="0" width="100%">
+		<thead>
+			<tr>
+                <th style="display:none">id</th>
+                <th>机房</th>
+                <th>机柜/机位信息</th>
+                <th>服务器规格</th>
+                <th>sn编号</th>
+                <th>供应商</th>
+                <th>型号</th>
+                <th>应用IP地址</th>
+                <th>远程管理卡IP</th>
+				<th>主机名</th>
+				<th>操作系统</th>
+				<th>CPU核数(个)</th>
+                <th>CPU个数</th>
+                <th>内存个数/槽数</th>
+                <th>硬盘个数/槽数</th>
+				<th>总共内存/单条内存</th>
+				<th>硬盘大小</th>
+                <th>硬盘类型</th>
+                <th>raid级别</th>
+                <th>raid卡类型</th>
+                <th>使用人</th>
+                <th>业务</th>
+                <th>出厂日期</th>
+                <th>保修日期</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for asset in assets %}
+        <tr>
+            <td style="display:none">{{asset['id']}}</td>
+            <td>{{idc.get(asset['idc_id'])}}</td>
+            <td>{{cabinet.get(asset['cabinet_seat_id'])}}</td>
+            <td>{{spec_list.get(asset['spec_id'])}}</td>
+            <td>{{asset['sn']}}</td>
+            <td>{{type_list.get(asset['type_id'])}}</td>
+            <td>{{model_list.get(asset['model_id'])}}</td>
+            <td>{{asset['inner_ip']}}</td>
+            <td>{{asset['remote_ip']}}</td>
+            <td>{{asset['hostname']}}</td>
+            <td>{{asset['os']}}</td>
+            <td>{{asset['cpu']}}</td>
+            <td>{{asset['nu_cpu']}}个</td>
+            <td>{{asset['nu_ram']}}个/{{asset['slot_ram']}}个</td>
+            <td>{{asset['nu_disk']}}个/{{asset['slot_disk']}}个</td>
+            <td>{{asset['ram']}}MB/{{(asset.ram|int/asset.nu_ram|int)|round}}MB</td>
+            <td>{{asset['disk']}}GB</td>
+            <td>{{asset['disk_type']}}</td>
+            <td>{{raid_list.get(asset['raid_id'])}}</td>
+            <td>{{asset['raid_type']}}</td>
+            <td>{{asset['admin']}}</td>
+            <td>{{asset['business']}}</td>
+            <td>{{asset['purchase_date']}}年</td>
+            <td>{{asset['warranty']}}年</td>
+        </tr>
+        {% endfor %}
+		</tbody>
+</table>
+
+ <script>
+        $('#datatables').DataTable({
+            "sScrollX":"3000px",
+            "language":{
+                    "lengthMenu":"每页 _MENU_ 条记录",
+                    "zeroRecords":"没有找到记录",
+                    "sInfo":"第 _PAGE_ 页 ( 总共 _PAGES_ 页),显示第 _START_ 至 _END_ 项(总共 _TOTAL_ 台)",
+                    "infoEmpty":"无记录",
+                    "infoFiltered":"(从 _MAX_ 条记录过滤)",
+                    "sSearch":"搜索:",
+                    "oPaginate":{
+                        "sFirst":"首页",
+                        "sPrevious":"上一页",
+                        "sNext":"下一页",
+                        "sLast":"末页"
+                    }
+                }
+        });
+</script>

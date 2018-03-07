@@ -1,0 +1,31 @@
+{% extends "apply_layout.html" %}
+
+{% block breadcrumb %}
+<li><a href="#">虚机使用说明文档</a><span class="divider"></span></li>
+{% endblock %}
+
+{% block body %}
+<p style="color:red;" ><font style="font-weight:bold;font-style:italic;">注意1：跳板机及所有服务器的操作将被严格审计，禁止通过跳板机、虚机下载等与工作无关的事，泄密等将由人力行政部追责。</p></font>
+<p style="color:red"><font style="font-weight:bold;font-style:italic;">注意2：请务必为自己的账号设置足够复杂的密码！注意防止数据泄漏！严禁窃取公司数据！</p></font>
+
+<h4>跳板机的使用方法</h4>
+
+<p>一,从公司内部通过跳板机登录虚机的使用方法：</p>
+ssh  your-username@192.168.200.200 （比如 ssh laijingli@192.168.200.200）
+然后选择对应虚机登录，参见本文最后边截图.</p>
+<br/>
+<p>二,从公司外部（即远程办公）通过跳板机登录虚机的使用方法：</p>
+<p>ssh -p 53122 your-username@vpnx.xunhuji.me（比如 ssh -p 53122 laijingli@vpnx.xunhuji.me)</p>
+<br/>
+<p>
+三,从公司外部(即远程办公)访问公司内部的服务器以及测试环境(需要安装VPN):
+</p>
+<p>客户端下载的地址:<a href="http://dev.xunhuji.me:18095/pages/viewpage.action?pageId=28643987">点我</a></p>
+<p>Android下openvpn的客户端配置:<a href="http://dev.xunhuji.me:18095/pages/viewpage.action?pageId=28645109">点我</a></p>
+<p>IOS下IPsec vpn客户端配置:<a href="http://dev.xunhuji.me:18095/pages/viewpage.action?pageId=28645100">点我</a></p>
+<p>mac下的openvpn客户端配置:<a href="http://dev.xunhuji.me:18095/pages/viewpage.action?pageId=28644926">点我</a></p>
+<p>windows下的openvpn的客户端配置:<a href="http://dev.xunhuji.me:18095/pages/viewpage.action?pageId=28644972">点我</a></p>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

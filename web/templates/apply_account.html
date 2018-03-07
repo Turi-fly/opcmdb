@@ -1,0 +1,68 @@
+{% extends "apply_layout.html" %}
+
+{% block breadcrumb %}
+<li><a href="#">申请账号</a><span class="divider"></span></li>
+{% endblock %}
+
+{% block body %}
+<div class="widget-box">
+   <div class="widget-title">
+      <h5><i class="fa fa-table fa-fw"></i>个人账号申请</h5>
+   </div> <!--widget-title end-->
+    <div class="col-md-4 col-md-offset-4">
+    <form class="form-signin" role="form" id="applyform">
+        <h2 class="form-signin-heading">个人账号申请</h2>
+        <br/>
+        <div class="input-group">
+			<input type="text" class="form-control" name="mail" placeholder="邮箱地址" required autofocus>
+			<span class="input-group-addon">@yunniao.me</span>
+		</div>
+        <br/>
+        <input type="text" class="form-control" name="name" placeholder="姓名" required>
+        <br/>
+        <select class="form-control" name="depment_id">
+                    <option value=1>开发人员</option>
+                    <option value=2>运维人员</option>
+                    <option value=3>测试人员</option>
+        </select>
+        <br/><br/>
+        <button id="app_btn" class="btn btn-lg btn-primary btn-block" type="submit">申请</button>
+    </form>
+    </div>
+   </div><!--widget-content end-->
+</div><!--widget-box end-->
+{% endblock %}
+
+{% block js %}
+/*申请账号*/
+$('#applyform').on('submit',function(){
+    var str = $('#applyform').serialize()
+    console.log(str)
+    $("#app_btn").attr({"disabled":"disabled"});
+    $.post('/Apply/account/',str,function(data){
+        data = JSON.parse(data)
+        if (data['code']==0){
+            suc_str = data['sucmsg']
+            swal({
+                title:"Successful",
+                text:suc_str,
+                type:"success",
+                confirmButtonText: "确定"
+            },function(){
+                location.href="/Apply/account_nav/"
+                });
+        }else{
+            err_str = data['errmsg']
+            swal({
+                title: "Error",
+                text:err_str,
+                type:"error",
+                confirmButtonText: "确定"
+            },function(){
+                location.href="/Apply/account_nav/"
+            });
+        }
+    })
+        return false;
+})
+{% endblock %}

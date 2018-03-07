@@ -1,0 +1,69 @@
+{% extends "apply_layout.html" %}
+
+{% block breadcrumb %}
+<li><a href="#">申请资源</a><span class="divider"></span></li>
+{% endblock %}
+
+{% block body %}
+<div class="widget-box">
+   <div class="widget-title">
+      <h5><i class="fa fa-table fa-fw"></i>虚拟机申请资源列表</h5>
+   </div> <!--widget-title end-->
+    		<table id ="datatabless"  class="table table-bordered table-striped table-hover" cellspacing="0" width="100%">
+		<thead>
+			<tr>
+                <th>VM_ip</th>
+                <th>虚拟机名称</th>
+                <th>cpu</th>
+                <th>内存</th>
+                <th>硬盘</th>
+                <th>使用人</th>
+                <th>说明</th>
+                <th>使用状态</th>
+                <th>用途</th>
+			</tr>
+		</thead>
+		<tbody>
+        {% for vm in vms %}
+            <tr>
+
+                <td>{{vm['ip']}}</td>
+                <td>{{vm['vm']}}</td>
+                <td>{{vm['cpu']}}核</td>
+                <td>{{vm['ram']}}MB</td>
+                <td>{{vm['disk']}}GB</td>
+                <td>{{vm['admin']}}</td>
+                <td>{{vm['remark']}}</td>
+                <td>{% if vm['use_status'] == 1 %}
+                    使用
+                    {% else %}
+                    未使用
+                    {% endif %}
+                </td>
+                <td>{{use_list[vm['des_use_id']]}}</td>
+            </tr>
+        {% endfor %}
+		</tbody>
+	   </table>
+
+</div><!--widget-box end-->
+{% endblock %}
+
+{% block js %}
+$('#datatabless').DataTable({
+        "language":{
+                "lengthMenu":"每页 _MENU_ 条记录",
+                "zeroRecords":"没有找到记录",
+                "sInfo":"第 _PAGE_ 页 ( 总共 _PAGES_ 页),显示第 _START_ 至 _END_ 项(总共 _TOTAL_ 项目)",
+                "infoEmpty":"无记录",
+                "infoFiltered":"(从 _MAX_ 条记录过滤)",
+                "sSearch":"搜索:",
+                "oPaginate":{
+                    "sFirst":"首页",
+                    "sPrevious":"上一页",
+                    "sNext":"下一页",
+                    "sLast":"末页"
+                }
+            }
+    });
+{% endblock %}

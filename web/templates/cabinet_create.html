@@ -1,0 +1,38 @@
+<form class="form-horizontal" id="create-asset" action="/assets/add_cabinet_create/" method="post">
+    <div class="form-group">
+        <label class="col-md-3 control-label">机柜号:</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" name="cabinet_num"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">所属机房:</label>
+        <div class="col-md-5">
+            <select class="form-control" name="idc_id">
+                {% for idc in idc_list %}
+                    <option value={{idc['id']}}>{{idc['name']}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">物理设备:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="physical"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">交换设备:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="switch"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">vm:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="vm"/>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+</script>

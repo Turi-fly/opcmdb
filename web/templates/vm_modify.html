@@ -1,0 +1,104 @@
+<form class="form-horizontal" id="create-asset" action="/assets/update_vm_modify/" method="post">
+    <input type="hidden" name="id" value="{{vm['id']}}" />
+    <div class="form-group">
+        <label class="col-md-3 control-label">vm名称:</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" name="vm" value="{{vm['vm']}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">UUID:</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" name="uuid" value="{{vm['uuid']}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">ip地址:</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" name="ip" value="{{vm['ip']}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">网卡mac地址:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="mac" value="{{vm['mac']}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">cpu:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="cpu" value="{{vm['cpu']}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">ram:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="ram" value="{{vm['ram']}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">disk:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="disk" value="{{vm['disk']}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">使用人:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="admin" value="{{vm['admin']}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">业务用途:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="business" value="{{vm['business']}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">宿主机:</label>
+        <div class="col-md-5">
+            <select class="form-control" name="host_id">
+                {% for asset in asset_list %}
+                    <option value="{{asset['id']}}"
+                    {% if asset['id'] == vm['host_id'] %}
+                    selected="selected"
+                    {% endif %}
+                    >{{asset['inner_ip']}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">使用状态:</label>
+        <div class="col-md-5">
+            <select class="form-control" name="use_status">
+                <option value=0 {% if vm['use_status'] == 0 %} selected="selected" {% endif %}>未使用</option>
+                <option value=1 {% if vm['use_status'] == 1 %} selected="selected" {% endif %}>使用</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">类型:</label>
+        <div class="col-md-5">
+            <select class="form-control" name="des_use_id">
+                {% for des_use in des_use_list %}
+                    <option value="{{des_use['id']}}"
+                    {% if des_use['id'] == vm['des_use_id'] %}
+                    selected="selected"
+                    {% endif %}
+                    >{{des_use['identity']}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div> 
+    <div class="form-group">
+        <label class="col-md-3 control-label">备注:</label>
+        <div class="col-md-5">
+{#            <input class="form-control" type="text" name="host_id"/>#}
+<textarea class="form-control" name="remark" style="height: 100px">{{vm['remark']}}</textarea>
+        </div>
+    </div>
+
+</form>
+<script type="text/javascript">
+</script>

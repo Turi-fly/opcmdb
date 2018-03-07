@@ -1,0 +1,11 @@
+*/migrations/*
+!*/migrations/__init__.py
+*.pyc
+/*.pyc
+*/*.pyc
+*.DS_Store
+*.idea
+*/.DS_Store
+*/.idea
+*/__pycache__
+*/__pycache__/*

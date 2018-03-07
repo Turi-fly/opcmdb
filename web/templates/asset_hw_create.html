@@ -1,0 +1,193 @@
+<form class="form-horizontal" id="create-asset" action="/assets/add_hw_create/" method="post">
+    <div class="form-group">
+        <label class="col-md-3 control-label">SN编号:</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control" name="sn"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">管理IP地址:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="inner_ip"/>
+        </div>
+    </div>
+        <div class="form-group">
+        <label class="col-md-3 control-label">应用IP地址:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="app_ip"/>
+        </div>
+    </div>
+        <div class="form-group">
+        <label class="col-md-3 control-label">远程卡IP地址:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="remote_ip"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">主机名:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="hostname"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">操作系统:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="os"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">CPU(核数):</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" id="cpu" name="cpu" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">CPU个数:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" id="nu_cpu" name="nu_cpu" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">内存个数:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" id="nu_ram" name="nu_ram" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">硬盘个数:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" id="nu_disk" name="nu_disk" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">内存大小:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" id="ram" name="ram" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">硬盘大小:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" id="disk" name="disk" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">内存槽数:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" id="disk" name="slot_ram" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">硬盘槽数:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" id="disk" name="slot_disk" />
+        </div>
+    </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">raid级别:</label>
+        <div class="col-md-5">
+            <select class="form-control" name="raid_id">
+                {% for raid in raid_list %}
+                    <option value={{raid['id']}}>{{raid['raid_level']}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">raid卡类型:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" id="raid_type" name="raid_type" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">机房:</label>
+        <div class="col-md-5">
+            <select class="form-control" name="idc_id">
+                {% for idc in idc_list %}
+                    <option value={{idc['id']}}>{{idc['name']}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">机房位置/机位信息:</label>
+        <div class="col-md-5">
+            <select class="form-control" name="cabinet_seat_id">
+                {% for cabinet in cabinet_list %}
+                    <option value={{cabinet['id']}}>{{cabinet['cabinet_num']}}/{{cabinet['position']}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">使用人:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="admin"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">业务:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="business"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">采购日期:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" id="purchase_date" name="purchase_date"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">保修时间:</label>
+        <div class="col-md-5">
+            <input class="form-control" type="text" id="warranty" name="warranty" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">规格:</label>
+        <div class="col-md-5">
+            <select class="form-control" name="spec_id">
+                {% for spec in spec_list %}
+                    <option value={{spec['id']}}>{{spec['spec']}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">供应商:</label>
+        <div class="col-md-5">
+            <select class="form-control" name="type_id">
+                {% for type in type_list %}
+                    <option value={{type['id']}}>{{type['type']}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">型号:</label>
+        <div class="col-md-5">
+            <select class="form-control" name="model_id">
+                {% for model in model_list %}
+                    <option value={{model['id']}}>{{model['model']}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        $('#purchase_date').datetimepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm-dd',
+            minView:2
+        });
+
+        $('#warranty').datetimepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm-dd',
+            minView:2
+        });
+    });
+</script>

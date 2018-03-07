@@ -1,0 +1,255 @@
+{% extends "layout.html" %}
+
+{% block breadcrumb %}
+<li><a href="#">服务器</a><span class="divider"></span></li>
+<li class="active">机房</li>
+{% endblock %}
+
+{% block body %}
+<div class="widget-box">
+   <div class="widget-title"> 
+      <h5 style="float:left;"><i class="fa fa-table fa-fw"></i>机房信息</h5>
+      <button style="float:right;margin-bottom: 20px" class="btn btn-primary btn-sm" id="addBtn" data-toggle="modal" data-target="#addAsset" data-title="添加IDC" data-btn-txt="添加" data-url='/assets/idc_create/'>添加机房</button>
+   </div> <!--widget-title end-->
+    
+    <div class="widget-content">
+    <!--用户列表-->
+		<table id ="datatabless"  class="table table-bordered table-striped table-hover" cellspacing="0" width="100%">
+		<thead>
+			<tr>
+                <th>机房</th>
+                <th>物理设备</th>
+                <th>交换机</th>
+                <th>vm</th>
+                <th>ip段</th>
+                <th>机房地址</th>
+                <th>机房电话</th>
+                <th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for idc in idcs %}
+        <tr>
+            <td>{{idc['name']}}</td>
+            <td>{{idc['physical']}}</td>
+            <td>{{idc['switch']}}</td>
+            <td>{{idc['vm']}}</td>
+            <td>{{idc['ip_seg']}}</td>
+            <td>{{idc['address']}}</td>
+            <td>{{idc['phone']}}</td>
+            <td>
+                <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#modifyAsset" data-title="修改IDC" data-btn-txt="修改" data-url="/assets/idc_modify/?id={{idc['id']}}">修改</button>
+                <button type="button" class="btn btn-xs btn-danger btn-delete" data-url="/assets/idc_delete/?id={{idc['id']}}" data-text="{{idc['name']}}">删除</button>
+            </td>
+        </tr>
+        {% endfor %}
+		</tbody>
+	   </table>
+    <!--添加资产模态窗-->
+        <div class="modal fade bs-example-modal-lg" id="addAsset" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">添加资产</h4>
+              </div>
+              <div class="modal-body" >
+                添加资产
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary btn-form-submit" id="asset-create">添加</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    <!--更新资产模态窗-->
+            <div class="modal fade bs-example-modal-lg" id="modifyAsset" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">更新资产</h4>
+              </div>
+              <div class="modal-body" >
+                 更新资产
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary btn-form-submit" id="asset-update">更新</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+	</div><!--widget-content end-->
+
+</div><!--widget-box end-->
+{% endblock %}
+{% block js %}
+
+    $('#datatabless').DataTable({
+            "language":{
+                    "lengthMenu":"每页 _MENU_ 条记录",
+                    "zeroRecords":"没有找到记录",
+                    "sInfo":"第 _PAGE_ 页 ( 总共 _PAGES_ 页),显示第 _START_ 至 _END_ 项(总共 _TOTAL_ 项目)",
+                    "infoEmpty":"无记录",
+                    "infoFiltered":"(从 _MAX_ 条记录过滤)",
+                    "sSearch":"搜索:",
+                    "oPaginate":{
+                        "sFirst":"首页",
+                        "sPrevious":"上一页",
+                        "sNext":"下一页",
+                        "sLast":"末页"
+                    }
+                }
+        });
+
+
+
+
+
+        jQuery('#addAsset').on('show.bs.modal', function (event) {
+        if(!event.relatedTarget) {return;}
+            var button = jQuery(event.relatedTarget);
+            var title = button.data('title');
+            var btn_txt = button.data('btn-txt');
+            var url = button.data('url');
+            var that = this;
+            jQuery.get(url, {}, function(result) {
+                jQuery(that).find('.modal-body').html(result);
+            });
+        });
+
+
+        jQuery('#modifyAsset').on('show.bs.modal', function (event) {
+            if(!event.relatedTarget) {return;}
+                var button = jQuery(event.relatedTarget);
+                var title = button.data('title');
+                var btn_txt = button.data('btn-txt');
+                var url = button.data('url');
+                var that = this;
+                jQuery.get(url, {}, function(result) {
+                jQuery(that).find('.modal-body').html(result);
+            });
+        });
+
+
+        $('#asset-update').on('click',function(){
+                var _form = jQuery('#modifyAsset').find('form');
+                var _url = (_form.attr('action'))
+                console.log(_url)
+                $.post(_url, _form.serializeArray(),function(data){
+                                        if (data['code'] == 0){
+
+                        swal({
+                        title: data['result'],
+                        text: '',
+                        type: "success",
+                        showCancelButton: false,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "确定",
+                        cancelButtonText: "关闭",
+                        closeOnConfirm: true,
+                        closeOnCancel: false
+                        },
+                        function(isConfirm){
+                            window.location.reload();
+                    });
+                    }else{
+                        swal({
+                            title: data['errmsg'],
+                            text: '',
+                            type: "error",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确定",
+                            cancelButtonText: "关闭",
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                            },
+                            function(isConfirm){
+
+                        });
+                        }
+
+                },'json'
+                );
+            })
+
+
+
+        $('#asset-create').on('click',function(){
+                var _form = jQuery('#addAsset').find('form');
+                var _url = (_form.attr('action'))
+                console.log(_url)
+                $.post(_url, _form.serializeArray(),function(data){
+                    if (data['code'] == 0){
+
+                        swal({
+                        title: data['result'],
+                        text: '',
+                        type: "success",
+                        showCancelButton: false,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "确定",
+                        cancelButtonText: "关闭",
+                        closeOnConfirm: true,
+                        closeOnCancel: false
+                        },
+                        function(isConfirm){
+                            window.location.reload();
+                    });
+                    }else{
+                        swal({
+                            title: data['errmsg'],
+                            text: '',
+                            type: "error",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确定",
+                            cancelButtonText: "关闭",
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                            },
+                            function(isConfirm){
+
+                        });
+                        }
+
+
+                },'json'
+                );
+            })
+
+        jQuery('.btn-delete').on('click', function() {
+            var that = this,
+                text = jQuery(that).data('text'),
+                url = jQuery(that).data('url');
+
+
+                            swal({
+                                title: "确定删除机房" + text,
+                                text: '',
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#DD6B55",
+                                confirmButtonText: "确定",
+                                cancelButtonText: "关闭",
+                                closeOnConfirm: true,
+                                closeOnCancel: true
+                            },
+                            function(isConfirm){
+                                if(isConfirm) {
+                                    $.post(url,{},function(result){
+                                    window.location.reload();
+                                    },'json');
+                                }
+                            });
+
+            });
+
+
+
+
+{% endblock %}
